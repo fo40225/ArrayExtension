@@ -33,7 +33,7 @@ namespace ArrayExtension
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///   <paramref name="index" /> is less than the lower bound of <paramref name="array" />.-or-<paramref name="length" /> is less than zero.</exception>
         /// <exception cref="T:System.ArgumentException">
-        ///   <paramref name="index" /> and <paramref name="length" /> do not specify a valid range in <paramref name="array" />.-or-<paramref name="comparer" /> is null, and <paramref name="value" /> is of a type that is not compatible with the elements of <paramref name="array" />.</exception>
+        ///   <paramref name="index" /> and <paramref name="length" /> do not specify a valid range in <paramref name="array" />.-or-<paramref name="comparison" /> is null, and <paramref name="value" /> is of a type that is not compatible with the elements of <paramref name="array" />.</exception>
         public static int BinarySearch<T>(this T[] array, T value, Comparison<T> comparison = null, int? index = null, int? length = null)
         {
             IComparer<T> comparer = null;
@@ -98,7 +98,6 @@ namespace ArrayExtension
         ///   <paramref name="sourceIndex" /> is less than the lower bound of the first dimension of <paramref name="sourceArray" />.-or-<paramref name="destinationIndex" /> is less than the lower bound of the first dimension of <paramref name="destinationArray" />.-or-<paramref name="length" /> is less than zero.</exception>
         /// <exception cref="T:System.ArgumentException">
         ///   <paramref name="length" /> is greater than the number of elements from <paramref name="sourceIndex" /> to the end of <paramref name="sourceArray" />.-or-<paramref name="length" /> is greater than the number of elements from <paramref name="destinationIndex" /> to the end of <paramref name="destinationArray" />.</exception>
-
         public static void ConstrainedCopy<T>(this T[] sourceArray, int sourceIndex, Array destinationArray, int destinationIndex, int length)
         {
             Array.ConstrainedCopy(sourceArray, sourceIndex, destinationArray, destinationIndex, length);
@@ -154,7 +153,7 @@ namespace ArrayExtension
         }
 
         /// <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire <see cref="T:System.Array" />.</summary>
-        /// <returns>The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <paramref name="T" />.</returns>
+        /// <returns>The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <typeparam name="T" />.</returns>
         /// <param name="array">The one-dimensional, zero-based <see cref="T:System.Array" /> to search.</param>
         /// <param name="match">The <see cref="T:System.Predicate`1" /> that defines the conditions of the element to search for.</param>
         /// <typeparam name="T">The type of the elements of the array.</typeparam>
@@ -188,7 +187,6 @@ namespace ArrayExtension
         ///   <paramref name="array" /> is null.-or-<paramref name="match" /> is null.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///   <paramref name="startIndex" /> is outside the range of valid indexes for <paramref name="array" />.-or-<paramref name="count" /> is less than zero.-or-<paramref name="startIndex" /> and <paramref name="count" /> do not specify a valid section in <paramref name="array" />.</exception>
-
         public static int FindIndex<T>(this T[] array, Predicate<T> match, int startIndex = 0, int? count = null)
         {
             if (count.HasValue)
@@ -202,7 +200,7 @@ namespace ArrayExtension
         }
 
         /// <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire <see cref="T:System.Array" />.</summary>
-        /// <returns>The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <paramref name="T" />.</returns>
+        /// <returns>The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <typeparam name="T" />.</returns>
         /// <param name="array">The one-dimensional, zero-based <see cref="T:System.Array" /> to search.</param>
         /// <param name="match">The <see cref="T:System.Predicate`1" /> that defines the conditions of the element to search for.</param>
         /// <typeparam name="T">The type of the elements of the array.</typeparam>
@@ -224,7 +222,6 @@ namespace ArrayExtension
         ///   <paramref name="array" /> is null.-or-<paramref name="match" /> is null.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///   <paramref name="startIndex" /> is outside the range of valid indexes for <paramref name="array" />.-or-<paramref name="count" /> is less than zero.-or-<paramref name="startIndex" /> and <paramref name="count" /> do not specify a valid section in <paramref name="array" />.</exception>
-
         public static int FindLastIndex<T>(this T[] array, Predicate<T> match, int startIndex = 0, int? count = null)
         {
             if (count.HasValue)
@@ -259,16 +256,15 @@ namespace ArrayExtension
         ///   <paramref name="array" /> is null.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///   <paramref name="startIndex" /> is outside the range of valid indexes for <paramref name="array" />.-or-<paramref name="count" /> is less than zero.-or-<paramref name="startIndex" /> and <paramref name="count" /> do not specify a valid section in <paramref name="array" />.</exception>
-
         public static int IndexOf<T>(this T[] array, T value, int startIndex = 0, int? count = null)
         {
             if (count.HasValue)
             {
-                return Array.IndexOf(array, value, startIndex);
+                return Array.IndexOf(array, value, startIndex, count.Value);
             }
             else
             {
-                return Array.IndexOf(array, value, startIndex, count.Value);
+                return Array.IndexOf(array, value, startIndex);
             }
         }
 
@@ -283,16 +279,15 @@ namespace ArrayExtension
         ///   <paramref name="array" /> is null.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///   <paramref name="startIndex" /> is outside the range of valid indexes for <paramref name="array" />.-or-<paramref name="count" /> is less than zero.-or-<paramref name="startIndex" /> and <paramref name="count" /> do not specify a valid section in <paramref name="array" />.</exception>
-
         public static int LastIndexOf<T>(this T[] array, T value, int startIndex = 0, int? count = null)
         {
             if (count.HasValue)
             {
-                return Array.LastIndexOf<T>(array, value, startIndex);
+                return Array.LastIndexOf(array, value, startIndex, count.Value);
             }
             else
             {
-                return Array.LastIndexOf(array, value, startIndex, count.Value);
+                return Array.LastIndexOf(array, value, startIndex);
             }
         }
 
@@ -345,8 +340,7 @@ namespace ArrayExtension
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///   <paramref name="index" /> is less than the lower bound of <paramref name="array" />.-or-<paramref name="length" /> is less than zero.</exception>
         /// <exception cref="T:System.ArgumentException">
-        ///   <paramref name="index" /> and <paramref name="length" /> do not specify a valid range in <paramref name="array" />. -or-The implementation of <paramref name="comparer" /> caused an error during the sort. For example, <paramref name="comparer" /> might not return 0 when comparing an item with itself.</exception>
-
+        ///   <paramref name="index" /> and <paramref name="length" /> do not specify a valid range in <paramref name="array" />. -or-The implementation of <paramref name="comparison" /> caused an error during the sort. For example, <paramref name="comparison" /> might not return 0 when comparing an item with itself.</exception>
         public static void Sort<T>(this T[] array, Comparison<T> comparison = null, int? index = null, int? length = null)
         {
             IComparer<T> comparer = null;
@@ -393,7 +387,7 @@ namespace ArrayExtension
 
         private sealed class FunctorComparer<T> : IComparer<T>
         {
-            private Comparison<T> comparison;
+            private readonly Comparison<T> comparison;
 
             public FunctorComparer(Comparison<T> comparison)
             {
