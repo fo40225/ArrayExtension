@@ -153,7 +153,7 @@ namespace ArrayExtension
         }
 
         /// <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire <see cref="T:System.Array" />.</summary>
-        /// <returns>The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <typeparam name="T" />.</returns>
+        /// <returns>The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <typeparamref name="T"/>.</returns>
         /// <param name="array">The one-dimensional, zero-based <see cref="T:System.Array" /> to search.</param>
         /// <param name="match">The <see cref="T:System.Predicate`1" /> that defines the conditions of the element to search for.</param>
         /// <typeparam name="T">The type of the elements of the array.</typeparam>
